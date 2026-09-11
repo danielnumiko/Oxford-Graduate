@@ -928,7 +928,7 @@
   "variant": 1,
   "mode": "full",
   "scenario": "open",
-  "level": "pg",
+  "level": "ug",
   "ugLayout": "strip",
   "viewport": "desktop"
 }/*EDITMODE-END*/;
@@ -943,6 +943,10 @@ if(IS_EMBED){
   TWEAKS.viewport = 'desktop';
   document.body.classList.add('is-embed');
 }
+
+// UG-only prototype: lock the level so stored state or a ?level= param
+// cannot fall back to the postgraduate hero.
+TWEAKS.level = 'ug';
 
 const DATA_BASE = {
   full: {

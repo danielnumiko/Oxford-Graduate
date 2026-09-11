@@ -13,17 +13,24 @@ Claude Design project "Oxford".
 - `assets/logo-oxford.svg` — 80×80 university square logo.
 - `assets/balliol-crest.png` — college crest used in the UG hero.
 
-## Levels
+## Undergraduate only
 
-The page renders both admission levels, driven by a query parameter:
+The prototype renders the undergraduate hero (Mathematics and Philosophy:
+entry qualifications, course duration, UCAS code, application deadline,
+Balliol college card).
 
-- `?embed=1&level=ug&scenario=open` — undergraduate (Mathematics and
-  Philosophy: entry qualifications, course duration, UCAS code,
-  application deadline)
-- `?embed=1&level=pg&scenario=open` — postgraduate (DPhil in Ancient
-  History)
+The level is locked to `ug` in the page script, so neither a stored
+`oxford-hero-tabs` localStorage entry nor a `?level=pg` query parameter
+can fall back to the postgraduate hero. The PG code paths remain in the
+file but are unreachable.
 
-`scenario=closed` shows the live-site state with applications closed.
+## Preview controls
+
+- **Desktop / Mobile** — renders the hero in a laptop or phone frame.
+- The scenario switcher (Open / Closed) is hidden at UG level; it applies
+  only to the PG hero.
+- `?embed=1` strips the surrounding chrome and renders the bare hero,
+  which is what the preview frames load.
 
 ## Design tokens
 
