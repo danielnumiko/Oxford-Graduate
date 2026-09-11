@@ -1,0 +1,1375 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Course Hero — Tab explorations (Figma tokens)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Source+Serif+4:opsz,wght@8..60,300;8..60,400&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,200..400,0,0&display=swap" rel="stylesheet">
+<style>
+  /* ——— Figma tokens (verbatim from /OX.fig) ——— */
+  :root{
+    --teal:           rgb(21,97,109);    /* page hero bg */
+    --teal-card:      rgb(23,86,98);     /* dates card / meta cards */
+    --page:           rgb(242,240,240);  /* surrounding page */
+    --gold:           rgb(242,210,94);   /* accent / notes / underline */
+    --cream:          rgb(254,250,236);  /* primary on-dark text */
+    --cream-soft:     rgb(251,242,202);  /* title text */
+    --label-bg:       transparent;       /* nav pill bg (transparent on teal) */
+    --label-fg:       rgb(254,250,236);   /* nav pill fg (cream) */
+    --navy:           rgb(0,33,71);       /* logo navy */
+    --gold-on:        rgb(21,97,109);     /* text on gold (matches teal) */
+    --white:          rgb(255,255,255);
+
+    --serif: "Tiempos Headline","Source Serif 4","Times New Roman",serif;
+    --sans:  "DM Sans", system-ui, -apple-system, sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:var(--page);
+    font-family:var(--sans);
+    color:#1a1a1a;
+  }
+
+  /* ——— Page chrome around the explorations ——— */
+  .page{max-width:1360px;margin:0 auto;padding:20px 24px 24px}
+  .page h1.page-h{font-family:var(--sans);font-weight:500;font-size:20px;color:#1a1a1a;margin:0 0 4px}
+  .page .page-sub{color:#5a5a5a;font-size:13px;margin:0 0 20px;max-width:720px;line-height:1.5}
+
+  .switcher{
+    display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px;
+    padding:6px;background:#fff;border:1px solid #e3dccb;border-radius:10px;
+  }
+  .switcher button{
+    font-family:var(--sans);font-size:13px;font-weight:500;
+    border:1px solid transparent;background:transparent;color:#3a3a3a;
+    padding:9px 13px;border-radius:6px;cursor:pointer;
+  }
+  .switcher button:hover{background:var(--page)}
+  .switcher button.active{background:var(--teal);color:#fff;border-color:var(--teal)}
+  .switcher .lbl{font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:#8a8170;padding:9px 6px 9px 10px}
+
+  /* ——— Hero (Figma node 1:811 — exact 1280px frame) ——— */
+  .hero{
+    width:100%;
+    max-width:1280px;
+    margin:0 auto;
+    background:var(--teal);
+    color:var(--cream);
+    overflow:hidden;
+    position:relative;
+  }
+
+  /* Top nav (1:109) — 128px tall, 40px hpad */
+  .nav{
+    height:128px;
+    padding:24px 40px;
+    display:flex;align-items:center;justify-content:space-between;
+  }
+  .square-logo{
+    width:80px;height:80px;
+    background:url('assets/logo-oxford.svg') center / cover no-repeat;
+  }
+
+  .nav-right{display:flex;gap:20px;align-items:center}
+  .nav-pill{
+    background:transparent;
+    border:1px solid rgba(254,250,236,.5);
+    border-radius:5px;
+    padding:10px 20px;
+    display:flex;gap:20px;align-items:center;
+  }
+  .nav-pill a{
+    color:var(--cream);text-decoration:none;
+    font-family:var(--sans);font-weight:500;font-size:16px;line-height:1.2;
+    display:inline-flex;align-items:center;gap:8px;
+  }
+  .nav-pill a .ic{
+    width:16px;height:16px;display:inline-block;
+    flex:0 0 16px;
+  }
+  .nav-pill a .ic svg{width:100%;height:100%;display:block;fill:currentColor}
+
+  /* Breadcrumb strip (40px) */
+  .breadcrumb{
+    height:40px;background:transparent;
+    border-top:1px solid rgba(254,250,236,.18);
+    border-bottom:1px solid rgba(254,250,236,.18);
+    padding:10px 40px;
+    display:flex;align-items:center;gap:14px;
+  }
+  .breadcrumb a{
+    color:var(--cream);text-decoration:none;
+    font-family:var(--sans);font-weight:500;font-size:16px;line-height:1.2;
+    display:inline-flex;align-items:center;gap:14px;
+  }
+  .breadcrumb .chev{width:10px;height:10px;display:inline-block;
+    background:var(--gold);
+    -webkit-mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 20'><path d='M1.775 20 0 18.225 8.225 10 0 1.775 1.775 0 11.775 10z'/></svg>") no-repeat center / contain;
+            mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 20'><path d='M1.775 20 0 18.225 8.225 10 0 1.775 1.775 0 11.775 10z'/></svg>") no-repeat center / contain;
+  }
+
+  /* Body of hero — 60px vpad / 40px hpad */
+  .body{padding:60px 40px;display:flex;flex-direction:column;gap:40px}
+
+  /* Headline block */
+  .head{display:flex;flex-direction:column;gap:20px}
+  .label-pill{
+    display:inline-flex;align-items:center;justify-content:center;
+    background:transparent;color:var(--cream);
+    border:1px solid rgba(254,250,236,.45);
+    border-radius:5px;padding:5px 10px;
+    font-family:var(--sans);font-weight:500;font-size:14px;line-height:1.2;
+    width:max-content;
+    height:27px;
+    margin-bottom:20px;
+  }
+  .title{
+    font-family:var(--serif);font-weight:300;font-size:52px;line-height:1.2;
+    color:var(--cream-soft);margin:0 0 20px;letter-spacing:0;
+  }
+  .intro{
+    font-family:var(--sans);font-weight:400;font-size:21px;line-height:1.6;
+    color:var(--cream);margin:0;max-width:900px;
+  }
+
+  /* Dates card (1200×284, 5px radius, 30px pad, bg rgb(23,86,98)) */
+  .dates-card{
+    background:var(--teal-card);
+    border-radius:5px;
+    padding:30px;
+    position:relative;
+  }
+  .dates-row{display:flex;gap:20px;align-items:flex-start;margin-top:16px}
+  .dates-list{flex:1;display:flex;flex-direction:column;gap:0}
+  .date-item{padding:14px 0;border-top:1px solid rgba(254,250,236,.12);align-items:start}
+  .date-item:first-child{border-top:0;padding-top:6px}
+  .date-item:last-child{padding-bottom:0}
+  .date-item .text{display:flex;flex-direction:column;gap:3px}
+  .card-body.split .date-item{display:grid;grid-template-columns:max-content 1fr;column-gap:24px}
+  .card-body.split .date-item .text{display:contents}
+  /* Toggle variant: lay date items out horizontally (date | note) */
+  .card-body.single .date-item{display:grid;grid-template-columns:max-content 1fr;column-gap:24px}
+  .card-body.single .date-item .text{display:contents}
+  .card-body.single .date-item .note{margin-left:0}
+  /* top-right apply row */
+  .tab-row{display:flex;align-items:flex-start;justify-content:space-between;gap:20px}
+  .tab-row .apply-btn{width:auto;min-width:260px}
+  .date-item .d{
+    font-family:var(--sans);font-weight:500;font-size:16px;line-height:1.2;
+    color:var(--cream);
+  }
+  .date-item .note{
+    font-family:var(--sans);font-weight:400;font-size:15px;line-height:1.35;
+    color:var(--gold);
+  }
+  .apply-btn{
+    width:321px;height:59px;border-radius:5px;
+    background:var(--gold);color:var(--gold-on);
+    border:0;cursor:pointer;
+    padding:20px;display:flex;align-items:center;justify-content:space-between;
+    font-family:var(--sans);font-weight:500;font-size:16px;line-height:1.2;
+    text-decoration:none;
+    flex:0 0 auto;
+  }
+  .apply-btn:hover{background:#EEBC31}
+  .apply-btn .chev{
+    width:15px;height:15px;display:inline-block;background:var(--gold-on);
+    -webkit-mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 20'><path d='M1.775 20 0 18.225 8.225 10 0 1.775 1.775 0 11.775 10z'/></svg>") no-repeat center / contain;
+            mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 20'><path d='M1.775 20 0 18.225 8.225 10 0 1.775 1.775 0 11.775 10z'/></svg>") no-repeat center / contain;
+  }
+
+  /* Meta cards (Frame 223 — 386.667 × 126, 5px, 20×30 pad, gap 10) */
+  .meta-grid{display:flex;gap:20px}
+  .meta{
+    flex:1;background:var(--teal-card);border-radius:5px;
+    padding:20px 30px;display:flex;flex-direction:column;gap:10px;
+  }
+  .meta h3{
+    margin:0;font-family:var(--sans);font-weight:500;font-size:20px;line-height:1.2;
+    color:var(--cream);
+  }
+  .meta p{
+    margin:0;font-family:var(--sans);font-weight:400;font-size:16px;line-height:1.6;
+    color:var(--gold);
+  }
+
+  /* ——— Variant labels ——— */
+  .variant-label{display:none}
+
+  /* ——— V1: Pills (current — exact Figma) ——— */
+  .v1-tabs{display:flex;flex-direction:row;gap:10px;height:39px;align-items:center}
+  .v1-tabs button{
+    height:39px;border-radius:5px;padding:5px 10px;cursor:pointer;
+    font-family:var(--sans);font-weight:500;font-size:14px;line-height:1.2;
+    display:inline-flex;align-items:center;justify-content:center;
+  }
+  .v1-tabs .filled{
+    background:var(--gold);color:var(--gold-on);border:0;width:158px;
+  }
+  .v1-tabs .ghost{
+    background:transparent;color:var(--gold);
+    border:1px solid var(--gold);width:163px;
+  }
+  .v1-tabs button[aria-selected="true"].ghost{
+    background:var(--gold);color:var(--gold-on);
+  }
+  .v1-tabs button[aria-selected="false"].filled{
+    background:transparent;color:var(--gold);border:1px solid var(--gold);
+  }
+  .v1-tabs button:hover{background:#EEBC31;color:var(--gold-on);border-color:#EEBC31}
+
+  /* ——— V2: Underline tabs (gold accent under selected) ——— */
+  .v2-tabs{
+    display:flex;gap:32px;border-bottom:1px solid rgba(254,250,236,.18);
+    margin-bottom:0;
+  }
+  .v2-tabs button{
+    background:transparent;border:0;cursor:pointer;
+    padding:6px 2px 12px;
+    font-family:var(--sans);font-weight:500;font-size:16px;line-height:1.2;
+    color:rgba(254,250,236,.7);
+    border-bottom:3px solid transparent;margin-bottom:-1px;
+    display:inline-flex;align-items:center;gap:10px;
+  }
+  .v2-tabs button[aria-selected="true"]{color:var(--cream);border-bottom-color:var(--gold)}
+  .v2-tabs button:hover{color:var(--cream)}
+  .v2-tabs .status{
+    font-family:var(--sans);font-weight:500;font-size:11px;line-height:1;
+    text-transform:uppercase;letter-spacing:.08em;
+    background:rgba(242,210,94,.15);color:var(--gold);
+    border:1px solid rgba(242,210,94,.4);
+    padding:4px 8px;border-radius:999px;
+  }
+
+  /* ——— V3: Segmented control (gold-bordered switch) ——— */
+  .v3-wrap{display:flex;align-items:center;gap:14px;height:39px}
+  .v3-prefix{
+    font-family:var(--sans);font-weight:400;font-size:14px;color:rgba(254,250,236,.7);
+  }
+  .v3-seg{
+    display:inline-flex;padding:3px;
+    border:1px solid var(--gold);border-radius:5px;
+    background:rgba(242,210,94,.08);
+  }
+  .v3-seg button{
+    font-family:var(--sans);font-weight:500;font-size:14px;line-height:1.2;
+    background:transparent;color:var(--gold);border:0;border-radius:3px;
+    padding:6px 16px;cursor:pointer;height:31px;display:inline-flex;align-items:center;gap:8px;
+  }
+  .v3-seg button[aria-selected="true"]{background:var(--gold);color:var(--gold-on)}
+  .v3-seg .dot{width:6px;height:6px;border-radius:50%;background:#3aa56b}
+  .v3-seg button[aria-selected="true"] .dot{background:#1a6c40}
+
+  /* ——— V4: Labeled toggle ——— */
+  .v4-row{display:flex;align-items:center;gap:24px;flex-wrap:wrap;height:39px}
+  .v4-label{
+    font-family:var(--sans);font-weight:400;font-size:16px;color:var(--cream);
+  }
+  .v4-label em{color:var(--gold);font-style:normal;font-weight:500}
+  .v4-toggle{
+    position:relative;display:inline-flex;
+    background:rgba(0,0,0,.28);
+    border:1px solid rgba(254,250,236,.18);
+    border-radius:6px;padding:4px;
+    box-shadow:inset 0 1px 2px rgba(0,0,0,.2);
+    height:59px;
+  }
+  .v4-toggle button{
+    position:relative;
+    font-family:var(--sans);font-weight:500;font-size:16px;line-height:1.2;
+    background:transparent;border:0;color:rgba(254,250,236,.78);
+    padding:0 22px;border-radius:4px;cursor:pointer;
+    white-space:nowrap;height:100%;
+    transition:background-color .2s ease, color .2s ease;
+  }
+  .v4-toggle button[aria-checked="true"],
+  .v4-toggle button[aria-selected="true"]{
+    background:var(--gold);color:var(--gold-on);
+    box-shadow:0 1px 2px rgba(0,0,0,.18);
+    border-radius:4px;
+  }
+  .v4-toggle button:hover{color:var(--cream);background:rgba(254,250,236,.07)}
+  .v4-toggle button[aria-checked="true"]:hover,
+  .v4-toggle button[aria-selected="true"]:hover{background:#EEBC31;color:var(--gold-on)}
+  .v4-toggle button:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+  .v4-toggle .thumb{display:none}
+
+  /* ——— V5: Folder-style tabs above card ——— */
+  .v5-tabs{
+    display:flex;gap:4px;margin:0 0 -1px;padding-left:0;position:relative;z-index:2;
+  }
+  .v5-tabs button{
+    font-family:var(--sans);font-weight:500;font-size:14px;line-height:1.2;
+    background:rgba(23,86,98,.55);color:rgba(254,250,236,.7);
+    border:0;
+    border-top-left-radius:5px;border-top-right-radius:5px;
+    padding:12px 18px 14px;cursor:pointer;
+    display:inline-flex;align-items:center;gap:10px;
+    position:relative;top:1px;
+  }
+  .v5-tabs button[aria-selected="true"]{
+    background:var(--teal-card);color:var(--cream);
+  }
+  .v5-tabs button[aria-selected="true"]::after{
+    content:"";position:absolute;left:0;right:0;bottom:-1px;height:2px;background:var(--teal-card);
+  }
+  .v5-tabs .count{
+    font-family:var(--sans);font-weight:500;font-size:11px;line-height:1;
+    color:var(--cream);background:transparent;
+    border:1px solid rgba(254,250,236,.35);
+    padding:3px 7px;border-radius:999px;
+  }
+  .v5-tabs button[aria-selected="true"] .count{border-color:rgba(254,250,236,.55)}
+  .v5-tabs button:hover{background:var(--teal-card);color:var(--cream)}
+  .dates-card.v5{border-top-left-radius:0}
+
+  .hero.v2-hero .head{display:flex;flex-direction:column;gap:20px;align-items:flex-start}
+  .hero.v2-hero .head > :first-child{width:900px;max-width:100%}
+  .hero.v2-hero .head .apply-btn{width:auto;min-width:260px;margin-top:8px}
+
+  /* ——— Toggle + deadlines (v1) ——— */
+  .toggle-wrap{display:flex;flex-direction:column;gap:8px}
+  .toggle-hint{
+    font-family:var(--sans);font-weight:500;font-size:12px;
+    letter-spacing:.04em;text-transform:uppercase;
+    color:rgba(254,250,236,.6);line-height:1;
+  }
+
+  .deadlines-heading{
+    margin:0 0 14px;
+    font-family:var(--sans);font-weight:500;font-size:16px;line-height:1.2;
+    color:var(--cream);
+  }
+  .deadlines-heading span{color:rgba(254,250,236,.65);font-weight:400;font-size:16px}
+
+  /* Card body grid: deadlines list + mode-meta aside */
+  .card-body{
+    display:grid;grid-template-columns:1fr 280px;gap:40px;align-items:flex-start;
+    margin-top:22px;
+  }
+  .card-body.single{display:block;margin-top:24px}
+  .card-body.single .mode-meta{
+    margin:0 0 24px;padding:0;border-bottom:0;
+    display:flex;flex-direction:row;gap:0;flex-wrap:wrap;
+  }
+  .card-body.single .mode-meta > div{padding-right:32px}
+  .card-body.single .mode-meta > div + div{
+    padding-left:32px;border-left:1px solid rgba(254,250,236,.18);
+  }
+  /* Toggle variant: meta sidebar left, deadlines right */
+  .card-body.split{
+    display:grid;grid-template-columns:2fr 1fr;gap:48px;align-items:flex-start;
+    margin-top:40px;
+  }
+  .card-main{min-width:0}
+  .card-aside{
+    border-left:1px solid rgba(254,250,236,.14);
+    padding-left:30px;
+  }
+  .card-body.split .card-aside{border-left:0;padding-left:0}
+  .card-body.split .card-aside .mode-meta{
+    margin:0;padding:0;display:flex;flex-direction:column;gap:24px;
+  }
+  /* Mode meta strip under toggle (toggle variant) */
+  .mode-meta{
+    margin:24px 0 24px;display:flex;gap:48px;flex-wrap:wrap;
+    padding-bottom:24px;
+  }
+  .mode-meta > div{display:flex;align-items:center;gap:14px}
+  .mode-meta > div > div{display:flex;flex-direction:column;gap:4px}
+  .meta-ic{
+    font-family:'Material Symbols Outlined';
+    font-size:24px;line-height:1;color:var(--gold);
+    font-variation-settings:'wght' 300,'FILL' 0;
+    flex:0 0 24px;
+  }
+  .mode-meta dt{
+    font-family:var(--sans);font-weight:500;font-size:14px;line-height:1.2;
+    color:rgba(254,250,236,.7);
+  }
+  .mode-meta dd{
+    margin:0;font-family:var(--sans);font-weight:500;font-size:16px;line-height:1.2;
+    color:var(--cream);
+  }
+  /* Inline variant for side-by-side columns */
+  .mode-meta.inline{
+    margin:0 0 32px;padding:0;border-top:0;gap:0;
+  }
+  .mode-meta.inline > div{gap:3px;padding-right:24px}
+  .mode-meta.inline > div + div{
+    padding-left:24px;border-left:1px solid rgba(254,250,236,.18);
+  }
+  .mode-meta.inline dt{font-size:13px}
+  .mode-meta.inline dd{font-size:16px}
+
+  /* Unified deadline banner (status above dates list) */
+  .deadline-banner{
+    display:flex;align-items:flex-start;gap:10px;
+    padding:12px 14px;
+    margin:0 0 16px;
+    font-family:var(--sans);font-size:16px;line-height:1.45;
+    color:var(--cream);
+    border-radius:5px;
+    border:1px solid rgba(254,250,236,.16);
+    background:rgba(0,0,0,.12);
+  }
+  .deadline-banner b{font-weight:500}
+  .deadline-banner.urgent{
+    background:rgba(0,0,0,.12);
+    border-color:rgba(254,250,236,.16);
+  }
+  .deadline-banner .banner-ic{
+    width:22px;height:22px;border-radius:50%;
+    background:transparent;color:var(--gold);
+    display:inline-grid;place-items:center;flex:0 0 22px;
+    font-family:'Material Symbols Outlined';font-size:20px;line-height:1;
+    font-variation-settings:'wght' 300,'FILL' 0;
+  }
+  .deadline-banner.urgent .banner-ic{
+    background:transparent;color:var(--gold);
+    font-family:'Material Symbols Outlined';font-weight:300;font-size:20px;
+  }
+
+  /* Closing-soon alert (legacy) */
+  .closing-alert{
+    display:flex;align-items:flex-start;gap:10px;
+    background:rgba(242,210,94,.12);
+    border:1px solid rgba(242,210,94,.45);
+    border-radius:5px;
+    padding:12px 14px;
+    margin:0 0 16px;
+    font-family:var(--sans);font-size:15px;line-height:1.45;
+    color:var(--cream);
+  }
+  .closing-alert .closing-ic{
+    width:22px;height:22px;border-radius:50%;
+    background:var(--gold);color:var(--gold-on);
+    display:inline-grid;place-items:center;flex:0 0 22px;
+    font-family:var(--serif);font-weight:600;font-size:14px;line-height:1;
+  }
+
+  /* Closing-soon variant of side-by-side pill (more specific override below) */
+
+  /* ——— V6: Side-by-side ——— */
+  .v6-grid{display:grid;grid-template-columns:1fr 1px 1fr;gap:28px;margin-top:6px}
+  .v6-divider{background:rgba(254,250,236,.12)}
+  .v6-col h4{
+    margin:0 0 32px;display:flex;align-items:center;gap:12px;
+  }
+  .v6-col h4 .v6-pill{
+    display:inline-flex;align-items:center;justify-content:center;
+    background:var(--gold);color:var(--gold-on);
+    border-radius:5px;padding:5px 10px;
+    font-family:var(--sans);font-weight:500;font-size:14px;line-height:1.2;
+    width:max-content;height:27px;
+    white-space:nowrap;
+  }
+  .v6-col h4 .v6-pill.is-closing{
+    background:transparent;color:var(--gold);
+    border:1px solid var(--gold);
+  }
+  .v6-col h4 .bar{display:none}
+  .v6-apply{margin-top:18px;display:flex;justify-content:flex-end}
+  .v6-intro{
+    display:grid;grid-template-columns:1fr auto;gap:40px;align-items:flex-end;
+    padding-bottom:26px;margin-bottom:26px;
+    border-bottom:1px solid rgba(254,250,236,.12);
+  }
+  .v6-intro p{
+    margin:0;font-family:var(--sans);font-weight:400;font-size:17px;line-height:1.6;
+    color:var(--cream);max-width:820px;
+  }
+  .v6-intro .apply-btn{width:auto;min-width:260px}
+
+  /* ——— Graduate cards (live-site structure) ——— */
+  .pg-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+  .pg-card{
+    background:var(--teal-card);border:1px solid rgba(254,250,236,.14);
+    border-radius:5px;padding:28px 30px;
+  }
+  .pg-card-top{display:grid;grid-template-columns:1fr auto;gap:20px 24px;align-items:start}
+  .pg-card-head{display:flex;align-items:center;gap:16px;grid-column:1 / -1;justify-content:space-between}
+  .pg-card-head h3{
+    margin:0;font-family:var(--serif);font-weight:300;font-size:34px;line-height:1.1;color:var(--cream);
+  }
+  .pg-status{
+    font-family:var(--sans);font-weight:400;font-size:14px;line-height:1;
+    color:var(--gold);border:1px solid var(--gold);border-radius:4px;
+    padding:7px 10px;white-space:nowrap;
+  }
+  .pg-notice{grid-column:1;grid-row:2}
+  .pg-notice p{margin:0;font-family:var(--sans);font-size:16px;line-height:1.5}
+  .pg-notice .imp{color:var(--gold)}
+  .pg-notice .cls{color:var(--cream);margin-top:4px}
+  .pg-notice a{color:var(--cream);text-decoration:underline;text-underline-offset:3px}
+  .pg-notice a:hover{color:var(--gold)}
+  .pg-apply{
+    grid-column:2;grid-row:2;align-self:start;
+    display:inline-flex;align-items:center;justify-content:center;
+    min-width:110px;height:59px;border-radius:5px;padding:0 24px;
+    background:var(--gold);color:var(--gold-on);text-decoration:none;
+    font-family:var(--sans);font-weight:500;font-size:16px;
+  }
+  .pg-apply:hover{background:#EEBC31}
+  .pg-apply.is-disabled{
+    background:rgb(140,148,104);color:rgb(58,72,44);pointer-events:none;
+  }
+  .pg-meta{
+    margin:26px 0 0;padding-top:26px;border-top:1px solid rgba(254,250,236,.2);
+    display:flex;flex-direction:column;gap:18px;
+  }
+  .pg-meta > div{display:grid;grid-template-columns:24px 1fr;column-gap:14px;align-items:start}
+  .pg-meta .mi{
+    font-family:'Material Symbols Outlined';font-size:20px;line-height:1.2;color:var(--gold);
+    font-variation-settings:'wght' 300,'FILL' 0;
+  }
+  .pg-meta dt{
+    margin:0 0 2px;font-family:var(--sans);font-weight:400;font-size:15px;line-height:1.2;color:var(--gold);
+  }
+  .pg-meta dd{
+    margin:0;font-family:var(--sans);font-weight:400;font-size:19px;line-height:1.25;color:var(--cream);
+  }
+  .pg-deadlines{
+    margin-top:20px;background:var(--teal-card);
+    border:1px solid rgba(254,250,236,.14);border-radius:5px;padding:26px 30px 30px;
+  }
+  .pg-deadlines h3{
+    margin:0 0 28px;display:flex;align-items:center;gap:14px;
+    font-family:var(--serif);font-weight:300;font-size:34px;line-height:1.1;color:var(--cream);
+  }
+  .pg-deadlines h3 .di{
+    font-family:'Material Symbols Outlined';font-size:26px;line-height:1;color:var(--gold);
+    font-variation-settings:'wght' 300,'FILL' 0;
+  }
+  .pg-dl-row{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:end}
+  .pg-dl-when{display:flex;flex-direction:column;gap:4px}
+  .pg-dl-when .t{font-family:var(--sans);font-size:15px;line-height:1.2;color:var(--cream)}
+  .pg-dl-when .d{font-family:var(--sans);font-weight:700;font-size:19px;line-height:1.2;color:var(--cream)}
+  .pg-dl-note{margin:0;font-family:var(--sans);font-size:17px;line-height:1.4;color:var(--gold)}
+
+  /* Notes under hero */
+  .notes{
+    width:100%;max-width:1280px;margin:14px auto 0;color:#5a5a5a;font-family:var(--sans);
+    font-size:13px;line-height:1.55;padding:0 40px;
+  }
+  .notes b{color:#1a1a1a;font-weight:600}
+
+  /* Tweaks */
+  .tweaks{
+    position:fixed;right:20px;bottom:20px;z-index:50;display:none;
+    background:#fff;border:1px solid #e3dccb;border-radius:12px;
+    box-shadow:0 14px 40px rgba(0,0,0,.14);padding:14px 16px;font-family:var(--sans);
+    font-size:13px;min-width:240px;
+  }
+  .tweaks.visible{display:block}
+  .tweaks h3{margin:0 0 10px;font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:#8a8170;font-weight:600}
+  .tweak-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:6px 0}
+
+  /* ——— Prototype device tabs ——— */
+  .level-tabs{display:flex;gap:0;margin:0 0 12px;border-bottom:1px solid #ddd6c6;justify-content:center}
+  .level-tabs button{
+    font-family:var(--sans);font-weight:500;font-size:15px;
+    background:transparent;border:0;border-bottom:3px solid transparent;
+    color:#6a6a6a;padding:12px 20px;cursor:pointer;margin-bottom:-1px;
+  }
+  .level-tabs button:hover{color:#1a1a1a}
+  .level-tabs button.active{color:#1a1a1a;border-bottom-color:var(--teal)}
+  .switcher{justify-content:center}
+
+  /* Device preview frames */
+  .phone-wrap{display:flex;justify-content:center;padding:0 0 24px}
+  .phone{
+    width:390px;height:844px;flex:0 0 390px;
+    border:10px solid #1a1a1a;border-radius:44px;overflow:hidden;
+    background:#000;box-shadow:0 18px 50px rgba(0,0,0,.22);
+  }
+  .phone iframe{width:100%;height:100%;border:0;display:block;background:#fff}
+
+  .laptop-wrap{display:flex;flex-direction:column;align-items:center;padding:0 0 24px}
+  .laptop{
+    width:100%;max-width:1320px;
+    border:10px solid #1a1a1a;border-radius:28px;
+    overflow:hidden;background:#000;
+    box-shadow:0 18px 50px rgba(0,0,0,.22);
+  }
+  /* Render a true 1280px desktop viewport, scaled to fit the frame */
+  .laptop .screen{position:relative;width:100%;overflow:hidden}
+  .laptop iframe{
+    width:1280px;height:820px;border:0;display:block;background:#fff;
+    transform-origin:top left;
+  }
+
+  body.is-embed .page{display:none}
+  body.is-embed{background:var(--page)}
+  /* Embedded in a device frame: hero goes full-bleed, content column stays capped */
+  body.is-embed .hero{max-width:none;width:100%}
+  body.is-embed .hero .nav,
+  body.is-embed .hero .breadcrumb,
+  body.is-embed .hero .body{max-width:1280px;margin-left:auto;margin-right:auto}
+  body.is-embed .hero .breadcrumb{border-left:0;border-right:0}
+  body.is-embed .notes{display:none}
+
+  /* ——— Undergraduate hero (Oxford blue) ——— */
+  :root{
+    --ug-blue:      rgb(29,66,166);
+    --ug-box:       rgb(38,80,186);
+    --ug-pale:      rgb(185,214,242);
+    --ug-chip:      rgb(224,237,249);
+    --ug-navy:      rgb(0,33,71);
+  }
+  .hero.ug{background:var(--ug-blue);color:#fff}
+  .hero.ug .title{color:#fff}
+  .hero.ug .intro{color:#fff}
+  .hero.ug .label-pill{border-color:rgba(255,255,255,.5);color:#fff}
+  .hero.ug .nav-pill{border-color:rgba(255,255,255,.45)}
+  .hero.ug .nav-pill a{color:#fff}
+  .hero.ug .breadcrumb{border-color:rgba(255,255,255,.2)}
+  .hero.ug .breadcrumb a{color:#fff}
+  .hero.ug .breadcrumb .chev{background:var(--ug-pale)}
+  .hero.ug .apply-btn{background:var(--ug-chip);color:var(--ug-navy)}
+  .hero.ug .apply-btn:hover{background:#fff}
+  .hero.ug .apply-btn .chev{background:var(--ug-navy)}
+
+  /* UG head: intro left, apply right */
+  .hero.ug .head{display:flex;flex-direction:row;gap:40px;align-items:flex-end;justify-content:space-between}
+  .hero.ug .head > :first-child{flex:1 1 0;min-width:0}
+  .hero.ug .head .apply-btn{flex:0 0 auto;width:auto;min-width:280px}
+
+  /* Structured-data boxes (course facts) */
+  .hero.ug .degree-awarded{
+    margin:0 0 20px;font-family:var(--serif);font-weight:300;font-size:28px;line-height:1.2;
+    color:var(--ug-pale);
+  }
+  .fact-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+  .fact-grid.two{grid-template-columns:1fr;align-content:start}
+  .fact{
+    background:var(--ug-box);border-radius:5px;padding:20px 24px;
+    display:flex;flex-direction:column;gap:10px;
+  }
+  .fact h3{
+    margin:0;font-family:var(--sans);font-weight:400;font-size:20px;line-height:1.2;
+    color:#fff;
+  }
+  .fact p{
+    margin:0;font-family:var(--sans);font-weight:400;font-size:16px;line-height:1.5;
+    color:var(--ug-pale);
+  }
+  .fact p b{color:#fff;font-weight:500}
+  .fact.span2{grid-column:span 2}
+
+  /* ——— College information ——— */
+  .college-wrap{
+    display:grid;grid-template-columns:1fr 340px;gap:40px;align-items:start;
+  }
+  .college-wrap .fact-grid.two .fact{padding:16px 24px}
+  .college-wrap.strip{grid-template-columns:1fr}
+  .college-card{
+    background:var(--ug-box);border-radius:5px;padding:24px 26px;
+  }
+  .college-card > h3{
+    margin:0 0 6px;font-family:var(--serif);font-weight:300;font-size:24px;line-height:1.2;color:#fff;
+  }
+  .college-card .sub{
+    margin:0 0 16px;font-family:var(--sans);font-size:14px;line-height:1.45;color:var(--ug-pale);
+  }
+  .crest-row{display:flex;gap:16px;align-items:center;margin:0 0 16px}
+  .crest-slot{
+    width:84px;height:84px;flex:0 0 84px;
+    background:transparent;overflow:hidden;
+  }
+  .crest-img{width:100%;height:100%;object-fit:contain;display:block;
+    filter:drop-shadow(0 2px 6px rgba(0,0,0,.28))}
+  .crest-row .crest-meta{min-width:0}
+  .crest-row .crest-meta .nm{
+    font-family:var(--serif);font-weight:300;font-size:20px;line-height:1.2;color:#fff;
+  }
+  .crest-row .crest-meta .mt{
+    font-family:var(--sans);font-size:14px;line-height:1.45;color:var(--ug-pale);margin-top:3px;
+  }
+
+  /* College fact list (sidebar mode) */
+  .cfacts{margin:0;display:flex;flex-direction:column;gap:0}
+  .cfacts > div{
+    display:grid;grid-template-columns:22px 1fr;column-gap:10px;
+    padding:9px 0;border-top:1px solid rgba(255,255,255,.16);
+  }
+  .cfacts > div:first-child{border-top:0;padding-top:0}
+  .cfacts > div:last-child{padding-bottom:0}
+  .cfacts .ci{
+    font-family:'Material Symbols Outlined';font-size:20px;line-height:1.3;
+    color:var(--ug-pale);font-variation-settings:'wght' 300,'FILL' 0;
+  }
+  .cfacts dt{
+    font-family:var(--sans);font-weight:400;font-size:13px;line-height:1.2;
+    color:var(--ug-pale);margin:0 0 6px;
+  }
+  .cfacts dd{
+    margin:0;font-family:var(--sans);font-weight:500;font-size:15px;line-height:1.3;color:#fff;
+    overflow-wrap:anywhere;
+  }
+  .cfacts dd a{color:#fff;text-decoration:underline;text-underline-offset:3px}
+  .cfacts dd a:hover{color:var(--ug-chip)}
+
+  /* College fact grid (strip mode) */
+  .college-wrap.strip .cfacts{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:0 40px;
+  }
+  .college-wrap.strip .cfacts > div{border-top:1px solid rgba(255,255,255,.16);padding:16px 0}
+  .college-wrap.strip .cfacts > div:nth-child(-n+3){border-top:0;padding-top:0}
+  .college-wrap.strip .crest-row{margin-bottom:28px}
+
+  /* College split: crest + name on the left, facts on the right */
+  .college-card.college-split{
+    display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:40px;align-items:start;
+  }
+  .college-card.college-split .crest-row{margin:0}
+  .college-card.college-split .cfacts{
+    display:flex;flex-direction:column;gap:28px;
+  }
+  .college-card.college-split .cfacts > div{
+    border-top:0;padding:0;min-width:0;
+  }
+
+  /* Body spacing for UG */
+  .hero.ug .body{gap:32px}
+
+  /* ═══════════════ TYPE TOKENS ═══════════════
+     One scale for both heroes. Headings = Tiempos Light,
+     body + CTA = DM Sans (400 / 500). */
+  :root{
+    --h1-font:var(--serif); --h1-weight:300; --h1-size:52px; --h1-lh:1.2;
+    --h2-font:var(--serif); --h2-weight:300; --h2-size:34px; --h2-lh:1.15;
+    --h3-font:var(--serif); --h3-weight:300; --h3-size:28px; --h3-lh:1.2;
+    --h4-font:var(--serif); --h4-weight:300; --h4-size:24px; --h4-lh:1.2;
+    --h5-font:var(--serif); --h5-weight:300; --h5-size:20px; --h5-lh:1.25;
+    --h6-font:var(--sans);  --h6-weight:500; --h6-size:20px; --h6-lh:1.2;
+
+    --body-lg-size:21px; --body-lg-lh:1.6;
+    --body-md-size:16px; --body-md-lh:1.5;
+    --body-sm-size:14px; --body-sm-lh:1.45;
+
+    --cta-font:var(--sans); --cta-weight:500; --cta-size:16px; --cta-lh:1.2;
+  }
+  .t-h1,.t-h2,.t-h3,.t-h4,.t-h5{letter-spacing:0}
+  .t-h1{font-family:var(--h1-font);font-weight:var(--h1-weight);font-size:var(--h1-size);line-height:var(--h1-lh)}
+  .t-h2{font-family:var(--h2-font);font-weight:var(--h2-weight);font-size:var(--h2-size);line-height:var(--h2-lh)}
+  .t-h3{font-family:var(--h3-font);font-weight:var(--h3-weight);font-size:var(--h3-size);line-height:var(--h3-lh)}
+  .t-h4{font-family:var(--h4-font);font-weight:var(--h4-weight);font-size:var(--h4-size);line-height:var(--h4-lh)}
+  .t-h5{font-family:var(--h5-font);font-weight:var(--h5-weight);font-size:var(--h5-size);line-height:var(--h5-lh)}
+  .t-h6{font-family:var(--h6-font);font-weight:var(--h6-weight);font-size:var(--h6-size);line-height:var(--h6-lh)}
+  .t-body-lg{font-family:var(--sans);font-weight:400;font-size:var(--body-lg-size);line-height:var(--body-lg-lh)}
+  .t-body-md{font-family:var(--sans);font-weight:400;font-size:var(--body-md-size);line-height:var(--body-md-lh)}
+  .t-body-sm{font-family:var(--sans);font-weight:400;font-size:var(--body-sm-size);line-height:var(--body-sm-lh)}
+  .t-cta{font-family:var(--cta-font);font-weight:var(--cta-weight);font-size:var(--cta-size);line-height:var(--cta-lh)}
+
+  /* ── Tokens applied (overrides the ad-hoc values above) ── */
+  /* H1 — course title */
+  .hero .title{font-family:var(--h1-font);font-weight:var(--h1-weight);font-size:var(--h1-size);line-height:var(--h1-lh)}
+  /* H2 — card headings */
+  .pg-card-head h3,
+  .pg-deadlines h3{font-family:var(--h2-font);font-weight:var(--h2-weight);font-size:var(--h2-size);line-height:var(--h2-lh)}
+  /* H3 — degree awarded, college name */
+  .hero.ug .degree-awarded,
+  .crest-row .crest-meta .nm{font-family:var(--h3-font);font-weight:var(--h3-weight);font-size:var(--h3-size);line-height:var(--h3-lh)}
+  /* H5 — spare */
+  /* H6 — structured-data / meta card labels */
+  .fact h3,
+  .meta h3{font-family:var(--h6-font);font-weight:var(--h6-weight);font-size:var(--h6-size);line-height:var(--h6-lh)}
+  /* body lg — intro */
+  .hero .intro{font-family:var(--sans);font-weight:400;font-size:var(--body-lg-size);line-height:var(--body-lg-lh)}
+  /* body md — values, notices, deadline copy */
+  .fact p,
+  .meta p,
+  .pg-notice p,
+  .pg-dl-note,
+  .pg-meta dd,
+  .cfacts dd,
+  .date-item .d,
+  .date-item .note,
+  .deadline-banner{font-family:var(--sans);font-size:var(--body-md-size);line-height:var(--body-md-lh)}
+  .pg-meta dd,.cfacts dd,.date-item .d{font-weight:500}
+  .fact p,.meta p,.pg-notice p,.pg-dl-note,.date-item .note,.deadline-banner{font-weight:400}
+  /* body sm — captions, field labels, status chips */
+  .label-pill,
+  .pg-status,
+  .pg-meta dt,
+  .mode-meta dt,
+  .pg-dl-when .t{font-family:var(--sans);font-weight:400;font-size:var(--body-sm-size);line-height:var(--body-sm-lh)}
+  /* college subtitle sits on body md with the rest of the panel text */
+  .crest-row .crest-meta .mt{font-family:var(--sans);font-weight:400;font-size:var(--body-md-size);line-height:var(--body-md-lh)}
+  /* college panel labels + values match the fact boxes above */
+  .cfacts dt{font-family:var(--h6-font);font-weight:var(--h6-weight);font-size:17px;line-height:var(--h6-lh);color:#fff}
+  .cfacts dd{font-family:var(--sans);font-weight:400;font-size:var(--body-md-size);line-height:var(--body-md-lh);color:var(--ug-pale)}
+  .cfacts dd a{color:var(--ug-pale)}
+  /* CTA — buttons, toggles, nav, breadcrumb, bold deadline date */
+  .apply-btn,
+  .pg-apply,
+  .v4-toggle button,
+  .nav-pill a,
+  .breadcrumb a,
+  .pg-dl-when .d{font-family:var(--cta-font);font-weight:var(--cta-weight);font-size:var(--cta-size);line-height:var(--cta-lh)}
+  .pg-dl-when .d{font-weight:700}
+
+  /* ═══════════════ RESPONSIVE ═══════════════ */
+
+  /* Tablet */
+  @media (max-width:1023px){
+    .body{padding:44px 28px}
+    .nav{height:auto;padding:20px 28px}
+    .breadcrumb{padding:10px 28px}
+    .hero .title{font-size:40px}
+    .hero.ug .degree-awarded,
+    .crest-row .crest-meta .nm{font-size:24px}
+    .pg-card-head h3,.pg-deadlines h3{font-size:28px}
+    .hero .intro{font-size:19px;max-width:none}
+    .fact-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .college-card.college-split{grid-template-columns:1fr 1fr;gap:32px}
+    .college-card.college-split .crest-row{grid-column:1 / -1}
+    .pg-grid{grid-template-columns:1fr}
+    .meta-grid{flex-wrap:wrap}
+    .meta{flex:1 1 260px}
+    .notes{padding:0 28px}
+  }
+
+  /* Mobile */
+  @media (max-width:719px){
+    .page{padding:20px 16px 40px}
+    .level-tabs button{padding:10px 14px;font-size:14px}
+    .switcher{gap:6px}
+
+    .body{padding:32px 20px;gap:28px}
+    .nav{padding:16px 20px;gap:12px}
+    /* Breadcrumb is desktop-only */
+    .breadcrumb{display:none}
+    .notes{padding:0 20px}
+
+    /* Nav: drop the secondary links, keep search + menu */
+    .nav-pill[aria-label="Top"]{display:none}
+    .square-logo{width:64px;height:64px}
+
+    /* Type steps down */
+    .hero .title{font-size:34px}
+    .hero.ug .degree-awarded,
+    .crest-row .crest-meta .nm{font-size:22px}
+    .pg-card-head h3,.pg-deadlines h3{font-size:26px}
+    .hero .intro{font-size:17px;line-height:1.55}
+    .fact h3,.meta h3,.cfacts dt{font-size:17px}
+
+    /* Head stacks, apply button full width */
+    .hero.ug .head,
+    .hero.v2-hero .head{flex-direction:column;align-items:stretch;gap:24px}
+    .hero.ug .head > :first-child,
+    .hero.v2-hero .head > :first-child{width:100%}
+    .apply-btn{width:100%;min-width:0;height:56px}
+
+    /* Everything to one column */
+    .fact-grid,
+    .fact-grid.two{grid-template-columns:1fr}
+    .fact{padding:18px 20px}
+    .college-card{padding:20px}
+    .college-card.college-split{grid-template-columns:1fr;gap:28px}
+    .college-card.college-split .cfacts{gap:22px}
+    .crest-row{gap:14px}
+    .crest-slot{width:64px;height:64px;flex:0 0 64px}
+
+    .pg-grid{grid-template-columns:1fr;gap:16px}
+    .pg-card{padding:22px 20px}
+    .pg-card-top{grid-template-columns:1fr;gap:16px}
+    .pg-card-head{flex-wrap:wrap;gap:10px}
+    .pg-apply{grid-column:1;grid-row:auto;width:100%}
+    .pg-meta{margin-top:20px;padding-top:20px}
+    .pg-deadlines{padding:22px 20px 24px}
+    .pg-deadlines h3{margin-bottom:20px}
+    .pg-dl-row{grid-template-columns:1fr;gap:14px;align-items:start}
+
+    .meta-grid{flex-direction:column}
+
+    /* Toggle wraps rather than overflowing */
+    .tab-row{flex-direction:column;align-items:stretch;gap:16px}
+    .v4-toggle{flex-wrap:wrap;height:auto}
+    .v4-toggle button{flex:1 1 auto;height:48px}
+    .tab-row .apply-btn{width:100%;min-width:0}
+
+    .mode-meta,
+    .card-body.single .mode-meta{flex-direction:column;gap:18px}
+    .card-body.single .mode-meta > div{padding-right:0}
+    .card-body.single .mode-meta > div + div{padding-left:0;border-left:0}
+    .card-body.split{grid-template-columns:1fr;gap:24px}
+    .date-item,
+    .card-body.single .date-item{grid-template-columns:1fr}
+    .card-body.single .date-item .note{margin-left:0}
+  }
+</style>
+</head>
+<body>
+  <div class="page">
+    <div class="level-tabs" id="level-tabs" role="tablist" aria-label="Preview">
+      <button data-vp="desktop" class="active">Desktop</button>
+      <button data-vp="mobile">Mobile</button>
+    </div>
+
+    <div class="switcher" id="switcher" role="tablist" aria-label="Scenario">
+      <span class="lbl">Scenario</span>
+      <button data-s="open" id="sc-open" class="active">Open</button>
+      <button data-s="closing" id="sc-closing">Closed (live site)</button>
+    </div>
+
+    <div class="switcher" id="ug-switcher" role="tablist" aria-label="College info layout" style="display:none"></div>
+  </div>
+
+  <div id="hero-mount"></div>
+
+<script src="image-slot.js"></script>
+<script>
+/*EDITMODE-BEGIN*/const TWEAKS = {
+  "variant": 1,
+  "mode": "full",
+  "scenario": "open",
+  "level": "pg",
+  "ugLayout": "strip",
+  "viewport": "desktop"
+}/*EDITMODE-END*/;
+
+const QS = new URLSearchParams(location.search);
+const IS_EMBED = QS.get('embed') === '1';
+
+try{ Object.assign(TWEAKS, JSON.parse(localStorage.getItem('oxford-hero-tabs')||'{}')); }catch(e){}
+if(IS_EMBED){
+  if(QS.get('level'))    TWEAKS.level = QS.get('level');
+  if(QS.get('scenario')) TWEAKS.scenario = QS.get('scenario');
+  TWEAKS.viewport = 'desktop';
+  document.body.classList.add('is-embed');
+}
+
+const DATA_BASE = {
+  full: {
+    label: "Full time",
+    length: "3-4 years",
+    start: "October 2026",
+    english: "Higher level required",
+    dates: [
+      { d: "Tuesday, 5 January, 2027", note: "Final application deadline for entry in 2027-28" },
+    ],
+  },
+  part: {
+    label: "Part time",
+    length: "6-8 years",
+    start: "October 2026",
+    english: "Higher level required",
+    dates: [
+      { d: "Tuesday, 5 January, 2027", note: "Final application deadline for entry in 2027-28" },
+    ],
+  }
+};
+
+function getData(){
+  const d = JSON.parse(JSON.stringify(DATA_BASE));
+  if(TWEAKS.scenario === 'closing'){
+    d.full.status = "Closed";
+    d.part.status = "Closed";
+    d.full.closingNote = "Closed to applications for entry in 2026-27. Register to receive an email when applications open (for entry in 2027-28).";
+    d.part.closingNote = d.full.closingNote;
+  } else {
+    d.full.status = "Open";
+    d.part.status = "Open";
+  }
+  return d;
+}
+Object.defineProperty(window, 'DATA', { get: getData });
+
+function esc(s){return s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+
+function dateList(mode){
+  return DATA[mode].dates.map(r=>`
+    <div class="date-item">
+      <div class="text">
+        <div class="d">${esc(r.d)}</div>
+        <div class="note">${esc(r.note)}</div>
+      </div>
+    </div>`).join('');
+}
+
+function applyBtn(){
+  return `<a class="apply-btn" href="#"><span>Apply for this course</span><span class="chev" aria-hidden="true"></span></a>`;
+}
+
+function navAndHead(extra, cardHTML){
+  return `
+    <div class="nav">
+      <div class="square-logo" role="img" aria-label="University of Oxford"></div>
+      <div class="nav-right">
+        <nav class="nav-pill" aria-label="Top">
+          <a href="#">Admissions</a><a href="#">News</a><a href="#">Research</a>
+        </nav>
+        <nav class="nav-pill" aria-label="Site">
+          <a href="#">Search<span class="ic" aria-hidden="true"><svg viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg"><path d="M 16.6 18 L 10.3 11.7 C 9.8 12.1 9.225 12.417 8.575 12.65 C 7.925 12.883 7.233 13 6.5 13 C 4.683 13 3.146 12.371 1.888 11.113 C 0.629 9.854 0 8.317 0 6.5 C 0 4.683 0.629 3.146 1.888 1.888 C 3.146 0.629 4.683 0 6.5 0 C 8.317 0 9.854 0.629 11.113 1.888 C 12.371 3.146 13 4.683 13 6.5 C 13 7.233 12.883 7.925 12.65 8.575 C 12.417 9.225 12.1 9.8 11.7 10.3 L 18 16.6 L 16.6 18 Z M 6.5 11 C 7.75 11 8.813 10.563 9.688 9.688 C 10.563 8.813 11 7.75 11 6.5 C 11 5.25 10.563 4.188 9.688 3.313 C 8.813 2.438 7.75 2 6.5 2 C 5.25 2 4.188 2.438 3.313 3.313 C 2.438 4.188 2 5.25 2 6.5 C 2 7.75 2.438 8.813 3.313 9.688 C 4.188 10.563 5.25 11 6.5 11 Z"/></svg></span></a>
+          <a href="#">Menu<span class="ic" aria-hidden="true"><svg viewBox="0 0 18 14" xmlns="http://www.w3.org/2000/svg"><rect y="0" width="18" height="2"/><rect y="6" width="18" height="2"/><rect y="12" width="18" height="2"/></svg></span></a>
+        </nav>
+      </div>
+    </div>
+    <div class="breadcrumb">
+      <a href="#">Menu item<span class="chev" aria-hidden="true"></span></a>
+      <a href="#">Menu item<span class="chev" aria-hidden="true"></span></a>
+      <a href="#">Menu item<span class="chev" aria-hidden="true"></span></a>
+    </div>
+    <div class="body">
+      ${heroHead(extra)}
+      ${cardHTML||''}
+      ${metaGrid()}
+    </div>
+  `;
+}
+
+function heroHead(extra){
+  return `
+    <div class="head">
+      <div>
+        <span class="label-pill">Graduate</span>
+        <h1 class="title">DPhil in Ancient History</h1>
+        <p class="intro">The DPhil in Ancient History is a research degree intended to make it possible for the successful candidate to aspire to a career in research and teaching at university level anywhere in the world where the Classical subjects are studied.</p>
+      </div>
+      ${extra||''}
+    </div>
+  `;
+}
+
+function metaGrid(){
+  return '';
+}
+
+function shell(cardHTML, notesHTML, headExtra){
+  return `
+  <div class="hero${headExtra?' v2-hero':''}" data-screen-label="01 Hero">
+    ${navAndHead(headExtra, cardHTML)}
+  </div>
+  ${notesHTML ? `<div class="notes">${notesHTML}</div>` : ''}
+  `;
+}
+
+// ——————— VARIANTS ———————
+
+function modeMeta(k){
+  return `
+    <dl class="mode-meta">
+      <div><span class="meta-ic" aria-hidden="true">hourglass_top</span><div><dt>Expected length</dt><dd>${esc(DATA[k].length)}</dd></div></div>
+      <div><span class="meta-ic" aria-hidden="true">event</span><div><dt>Expected start date</dt><dd>${esc(DATA[k].start)}</dd></div></div>
+      <div><span class="meta-ic" aria-hidden="true">translate</span><div><dt>English language level</dt><dd>${esc(DATA[k].english)}</dd></div></div>
+    </dl>
+  `;
+}
+
+function deadlineBanner(k){
+  const d = DATA[k];
+  if(d.closingNote){
+    return `
+      <div class="deadline-banner urgent" role="status">
+        <span class="banner-ic" aria-hidden="true">warning</span>
+        <span>${esc(d.closingNote)}</span>
+      </div>`;
+  }
+  return `
+    <div class="deadline-banner">
+      <span class="banner-ic" aria-hidden="true">warning</span>
+      <span><b>Deadlines</b> — 12:00 midday UK time on:</span>
+    </div>`;
+}
+
+function closingAlert(){ return ''; }
+
+function deadlinesHeading(){ return ''; }
+
+function v1(){
+  const m = TWEAKS.mode;
+  const D = DATA;
+  return shell(`
+    <div class="dates-card">
+      <div class="tab-row">
+        <div class="v4-toggle" data-state="${m}" role="radiogroup" aria-label="Mode of study">
+          <span class="thumb" aria-hidden="true"></span>
+          <button data-mode="full" role="radio" aria-checked="${m==='full'}" aria-selected="${m==='full'}">Full time — ${D.full.status}</button>
+          <button data-mode="part" role="radio" aria-checked="${m==='part'}" aria-selected="${m==='part'}">Part time — ${D.part.status}</button>
+        </div>
+        ${applyBtn()}
+      </div>
+
+      <div class="card-body single">
+        ${modeMeta(m)}
+        ${deadlineBanner(m)}
+        <div class="dates-list">${dateList(m)}</div>
+      </div>
+    </div>
+  `,
+  `<b>Toggle.</b> Length and start date on the left; deadlines on the right.`);
+}
+
+function v2(){
+  const col = (k,l)=>{
+    const d = DATA[k];
+    const closed = d.status === 'Closed';
+    return `
+      <div class="pg-card">
+        <div class="pg-card-top">
+          <div class="pg-card-head">
+            <h3>${esc(l)}</h3>
+            <span class="pg-status">${esc(d.status)}</span>
+          </div>
+          <div class="pg-notice">
+            <p class="imp">Important: Funding and costs information (below), including fee amounts and additional course costs, has been updated and relates to entry in 2027-28. All other information relates to entry in 2026-27.</p>
+            ${closed ? `<p class="cls">Closed to applications for entry in 2026-27. <a href="#">Register to receive an email</a> when applications open (for entry in 2027-28).</p>` : ''}
+          </div>
+          <a class="pg-apply${closed?' is-disabled':''}" href="#">Apply</a>
+        </div>
+        <dl class="pg-meta">
+          <div><span class="mi" aria-hidden="true">schedule</span><div><dt>Expected length</dt><dd>${esc(d.length)}</dd></div></div>
+          <div><span class="mi" aria-hidden="true">calendar_month</span><div><dt>Expected start date</dt><dd>${esc(d.start)}</dd></div></div>
+          <div><span class="mi" aria-hidden="true">assignment</span><div><dt>English language level</dt><dd>${esc(d.english)}</dd></div></div>
+        </dl>
+      </div>`;
+  };
+  const dl = DATA.full.dates[0];
+  return shell(`
+    <div class="pg-grid">
+      ${col('full','Full time')}
+      ${col('part','Part time')}
+    </div>
+    <div class="pg-deadlines">
+      <h3><span class="di" aria-hidden="true">calendar_month</span>Application deadlines</h3>
+      <div class="pg-dl-row">
+        <div class="pg-dl-when">
+          <span class="t">12:00 midday UK time</span>
+          <span class="d">${esc(dl.d)}</span>
+        </div>
+        <p class="pg-dl-note">${esc(dl.note)}</p>
+      </div>
+    </div>
+  `,
+  `<b>Matches the live site.</b> Full time and part time as separate cards with their own status, notice and meta; application deadlines in a full-width card beneath.`,
+  applyBtn());
+}
+
+const VARIANTS = { 1:v2, 2:v2 };
+
+// ——————— UNDERGRADUATE ———————
+
+const UG = {
+  title: "Mathematics and Philosophy",
+  degree: "BA / MMathPhil",
+  intro: "This course unites mathematics and philosophy, developing rigorous problem-solving and analytical skills. Ideal for graduate study or diverse careers, it offers a rich, intellectually stimulating and historically grounded education.",
+  facts: [
+    { h:"Entry qualifications:", p:"A*A*A with the A*s in Maths and Further Maths if available." },
+    { h:"Course duration:",      p:"4 years" },
+    { h:"UCAS code:",            p:"GV15" },
+    { h:"Application deadline:", p:"15 October 2026" },
+  ],
+  college: {
+    name: "Balliol College",
+    meta: "One of the oldest colleges in Oxford, on Broad Street",
+    facts: [
+      { ic:"tag",       dt:"UCAS campus code",  dd:"B" },
+      { ic:"history",   dt:"Founded",           dd:"1263" },
+      { ic:"groups",    dt:"Student numbers",   dd:"420 undergraduates · 250 graduates" },
+      { ic:"call",      dt:"Contact",           dd:"admissions@balliol.ox.ac.uk<br>+44 (0)1865 277777" },
+      { ic:"open_in_new", dt:"Open days",       dd:'<a href="#">Balliol College open days</a>' },
+    ],
+  },
+};
+
+function ugFacts(){
+  return `
+    <div class="fact-grid">
+      ${UG.facts.map(f=>`
+        <div class="fact">
+          <h3>${esc(f.h)}</h3>
+          <p>${f.p}</p>
+        </div>`).join('')}
+    </div>`;
+}
+
+function ugCollege(){
+  const c = UG.college;
+  const item = f=>`
+    <div>
+      <span class="ci" aria-hidden="true">${f.ic}</span>
+      <div><dt>${esc(f.dt)}</dt><dd>${f.dd}</dd></div>
+    </div>`;
+  const colA = c.facts.slice(0,3).map(item).join('');
+  const colB = c.facts.slice(3).map(item).join('');
+  return `<div class="college-wrap strip">
+    <div class="college-card college-split">
+      <div class="crest-row">
+        <div class="crest-slot">
+          <img src="assets/balliol-crest.png" alt="Balliol College crest" class="crest-img">
+        </div>
+        <div class="crest-meta">
+          <div class="nm">${esc(c.name)}</div>
+          <div class="mt">${esc(c.meta)}</div>
+        </div>
+      </div>
+      <dl class="cfacts">${colA}</dl>
+      <dl class="cfacts">${colB}</dl>
+    </div>
+  </div>`;
+}
+function ugHero(){
+  return `
+  <div class="hero ug" data-screen-label="01 UG Hero">
+    ${ugNav()}
+    <div class="breadcrumb">
+      <a href="#">Menu item<span class="chev" aria-hidden="true"></span></a>
+      <a href="#">Menu item<span class="chev" aria-hidden="true"></span></a>
+      <a href="#">Menu item<span class="chev" aria-hidden="true"></span></a>
+    </div>
+    <div class="body">
+      <div class="head">
+        <div>
+          <span class="label-pill">Undergraduate</span>
+          <h1 class="title">${esc(UG.title)}</h1>
+          <p class="degree-awarded">Degree awarded: <span>${esc(UG.degree)}</span></p>
+          <p class="intro">${esc(UG.intro)}</p>
+        </div>
+        ${applyBtn()}
+      </div>
+      ${ugFacts()}
+      ${ugCollege()}
+    </div>
+  </div>
+  `;
+}
+
+function ugNav(){
+  return `
+    <div class="nav">
+      <div class="square-logo" role="img" aria-label="University of Oxford"></div>
+      <div class="nav-right">
+        <nav class="nav-pill" aria-label="Top">
+          <a href="#">Admissions</a><a href="#">News</a><a href="#">Research</a>
+        </nav>
+        <nav class="nav-pill" aria-label="Site">
+          <a href="#">Search<span class="ic" aria-hidden="true"><svg viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg"><path d="M 16.6 18 L 10.3 11.7 C 9.8 12.1 9.225 12.417 8.575 12.65 C 7.925 12.883 7.233 13 6.5 13 C 4.683 13 3.146 12.371 1.888 11.113 C 0.629 9.854 0 8.317 0 6.5 C 0 4.683 0.629 3.146 1.888 1.888 C 3.146 0.629 4.683 0 6.5 0 C 8.317 0 9.854 0.629 11.113 1.888 C 12.371 3.146 13 4.683 13 6.5 C 13 7.233 12.883 7.925 12.65 8.575 C 12.417 9.225 12.1 9.8 11.7 10.3 L 18 16.6 L 16.6 18 Z M 6.5 11 C 7.75 11 8.813 10.563 9.688 9.688 C 10.563 8.813 11 7.75 11 6.5 C 11 5.25 10.563 4.188 9.688 3.313 C 8.813 2.438 7.75 2 6.5 2 C 5.25 2 4.188 2.438 3.313 3.313 C 2.438 4.188 2 5.25 2 6.5 C 2 7.75 2.438 8.813 3.313 9.688 C 4.188 10.563 5.25 11 6.5 11 Z"/></svg></span></a>
+          <a href="#">Menu<span class="ic" aria-hidden="true"><svg viewBox="0 0 18 14" xmlns="http://www.w3.org/2000/svg"><rect y="0" width="18" height="2"/><rect y="6" width="18" height="2"/><rect y="12" width="18" height="2"/></svg></span></a>
+        </nav>
+      </div>
+    </div>`;
+}
+
+function render(){
+  const mount = document.getElementById('hero-mount');
+  const isUG = TWEAKS.level === 'ug';
+
+  if(!IS_EMBED){
+    document.getElementById('switcher').style.display    = isUG ? 'none' : 'flex';
+    document.getElementById('ug-switcher').style.display = 'none';
+    setPageCopy(isUG);
+    const src = `Course Hero Tabs.html?embed=1&level=${TWEAKS.level}&scenario=${TWEAKS.scenario}`;
+    if(TWEAKS.viewport === 'mobile'){
+      mount.innerHTML = `<div class="phone-wrap"><div class="phone"><iframe src="${src}" title="Mobile preview"></iframe></div></div>`;
+    } else {
+      mount.innerHTML = `<div class="laptop-wrap">
+        <div class="laptop">
+          <div class="screen"><iframe src="${src}" title="Desktop preview"></iframe></div>
+        </div>
+      </div>`;
+      scaleDesktop();
+    }
+    syncTabs();
+    return;
+  }
+
+  document.getElementById('switcher').style.display    = isUG ? 'none' : 'flex';
+  document.getElementById('ug-switcher').style.display = 'none';
+  setPageCopy(isUG);
+
+  mount.innerHTML = isUG ? ugHero() : VARIANTS[TWEAKS.variant]();
+
+  mount.querySelectorAll('[data-mode]').forEach(el=>{
+    el.addEventListener('click', e=>{
+      const mode = e.currentTarget.getAttribute('data-mode');
+      if(mode!=='full' && mode!=='part') return;
+      TWEAKS.mode = mode; persist(); render();
+    });
+  });
+  syncTabs();
+}
+
+function setPageCopy(){ }
+
+function syncTabs(){
+  document.querySelectorAll('#level-tabs button[data-vp]').forEach(b=>{
+    b.classList.toggle('active', TWEAKS.viewport===b.dataset.vp);
+  });
+  document.querySelectorAll('#switcher button[data-s]').forEach(b=>{
+    b.classList.toggle('active', TWEAKS.scenario===b.dataset.s);
+  });
+}
+
+function persist(){ try{ localStorage.setItem('oxford-hero-tabs', JSON.stringify(TWEAKS)); }catch(e){} }
+
+function scaleDesktop(){
+  const screen = document.querySelector('.laptop .screen');
+  const frame  = document.querySelector('.laptop iframe');
+  if(!screen || !frame) return;
+  if(!screen.clientWidth){ requestAnimationFrame(scaleDesktop); return; }
+  const scale = Math.min(1, screen.clientWidth / 1280);
+  frame.style.transform = `scale(${scale})`;
+  screen.style.height = (820 * scale) + 'px';
+}
+window.addEventListener('resize', ()=>{ if(TWEAKS.viewport==='desktop') scaleDesktop(); });
+
+document.querySelectorAll('#level-tabs button[data-vp]').forEach(b=>{
+  b.addEventListener('click', ()=>{ TWEAKS.viewport=b.dataset.vp; persist(); render(); });
+});
+
+document.querySelectorAll('#switcher button[data-v]').forEach(b=>{
+  b.addEventListener('click', ()=>{ TWEAKS.variant=Number(b.dataset.v); persist(); render(); });
+});
+document.querySelectorAll('#switcher button[data-s]').forEach(b=>{
+  b.addEventListener('click', ()=>{ TWEAKS.scenario=b.dataset.s; persist(); render(); });
+});
+
+try{ window.parent.postMessage({type:'__edit_mode_available'}, '*'); }catch(e){}
+
+render();
+</script>
+</body>
+</html>
+
+<style id="__om-edit-overrides">
+div:nth-child(1) >.text >div:nth-child(1) { font-size: 15px !important }
+div:nth-child(1) >.text >div:nth-child(1) { font-weight: 400 !important }
+div:nth-child(2) >.text >div:nth-child(1) { font-weight: 400 !important }
+div:nth-child(2) >.text >div:nth-child(1) { font-size: 15px !important }
+div:nth-child(3) >.text >div:nth-child(1) { font-size: 15px !important }
+div:nth-child(3) >.text >div:nth-child(1) { font-weight: 400 !important }
+#hero-mount .dates-card .dates-list >div:nth-child(1) { padding: 14px 0px !important }
+#hero-mount .dates-card .dates-list >div:nth-child(1) { border-width: 1px 0px 0px !important; border-style: solid !important }
+#hero-mount .dates-card .dates-list >div:nth-child(1) { border-width: 0px !important }
+#hero-mount .dates-card .dates-list >div:nth-child(1) { border-style: none !important }
+#hero-mount .dates-card div:nth-child(1) >.mode-meta { padding: 0px !important }
+div:nth-child(1) >.dates-list >.date-item { padding: 14px 0px 0px !important }
+div:nth-child(1) >.dates-list >.date-item { padding: 0px !important }
+div:nth-child(1) >.dates-list >.date-item { padding: 0px 0px 14px !important }
+div:nth-child(1) >.dates-list >.date-item { padding: 0px !important }
+div:nth-child(1) >.dates-list >.date-item { padding: 0px 0px 14px !important }
+div:nth-child(1) >.dates-list >.date-item { padding: 0px !important }
+div:nth-child(3) >.mode-meta { margin: 0px !important }
+div:nth-child(3) >.mode-meta { margin: 0px 0px 32px !important }
+div:nth-child(3) >.mode-meta { padding: 0px !important }
+#hero-mount .dates-card [role="status"] { margin: 0px 0px 13px !important }
+#hero-mount .dates-card [role="status"] { margin: 0px 0px 10px !important }
+#hero-mount .dates-card [role="status"] { margin: 0px 0px 8px !important }
+#hero-mount .dates-card div:nth-child(3) >.deadline-banner { margin: 0px 0px 10px !important }
+#hero-mount .dates-card div:nth-child(3) >.deadline-banner { margin: 0px 0px 2px !important }
+#hero-mount .dates-card [role="status"] { margin: 0px !important }
+#hero-mount .dates-card [role="status"] { margin: 0px 0px 3px !important }
+#hero-mount .dates-card div:nth-child(3) >.deadline-banner { margin: 0px 0px 4px !important }
+div:nth-child(3) >.mode-meta { padding: 0px 0px 204px !important }
+div:nth-child(3) >.mode-meta { padding: 0px !important }
+#hero-mount .dates-card div:nth-child(3) >.deadline-banner { margin: 0px 0px 8px !important }
+#hero-mount .dates-card div:nth-child(1) >.deadline-banner { margin: 0px 0px 8px !important }
+#hero-mount .dates-card div:nth-child(3) >.deadline-banner { margin: 0px 0px 8px !important }
+#hero-mount .dates-card [role="status"] { margin: 0px 0px 8px !important }
+div:nth-child(3) >.mode-meta { padding: 0px !important }
+</style>
