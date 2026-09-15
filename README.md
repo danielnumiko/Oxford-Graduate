@@ -12,12 +12,13 @@ Claude Design project "Oxford".
   placeholders.
 - `assets/logo-oxford.svg` — 80×80 university square logo.
 - `assets/balliol-crest.png` — college crest used in the UG hero.
+- `assets/balliol-hero.png` — Broad Street facade photograph (1788x660).
 
 ## Undergraduate only
 
-The prototype renders the undergraduate hero (Mathematics and Philosophy:
-entry qualifications, course duration, UCAS code, application deadline,
-Balliol college card).
+The prototype renders the undergraduate College hero (Balliol College:
+UCAS campus code, founding date, student numbers, admissions contact and
+open days, over a credited facade photograph).
 
 The level is locked to `ug` in the page script, so neither a stored
 `oxford-hero-tabs` localStorage entry nor a `?level=pg` query parameter

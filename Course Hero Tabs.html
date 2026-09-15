@@ -638,6 +638,31 @@
   .hero.ug .head > :first-child{flex:1 1 0;min-width:0}
   .hero.ug .head .apply-btn{flex:0 0 auto;width:auto;min-width:280px}
 
+  /* College page: no apply button, so the head is a single column */
+  .hero.ug.college .head{display:block}
+  .hero.ug.college{background:var(--ug-blue)}
+  .hero.ug.college .body{padding-bottom:40px;background:var(--ug-blue)}
+
+  /* Hero image below the panel — blue behind the top half, light blue behind the bottom */
+  .hero-img{
+    margin:0;padding:0 40px 40px;
+    display:block;position:relative;
+    background:linear-gradient(to bottom,var(--ug-blue) 0,var(--ug-blue) 50%,var(--ug-chip) 50%,var(--ug-chip) 100%);
+  }
+  .hero-img > *{max-width:1200px;margin-left:auto;margin-right:auto}
+  .hero-img-slot{width:100%;aspect-ratio:16/7;background:rgba(0,0,0,.18);display:block;overflow:hidden;border-radius:8px 8px 0 0}
+  .hero-img-slot img{width:100%;height:100%;object-fit:cover;display:block}
+  .hero-img figcaption{
+    display:flex;align-items:center;gap:10px;
+    background:#fff;color:#1a1a1a;
+    padding:14px 18px;border-radius:0 0 8px 8px;
+    font-family:var(--sans);font-weight:400;
+  }
+  .hero-img figcaption .ci{
+    font-family:'Material Symbols Outlined';font-size:20px;line-height:1;
+    color:var(--ug-blue);font-variation-settings:'wght' 300,'FILL' 0;flex:0 0 20px;
+  }
+
   /* Structured-data boxes (course facts) */
   .hero.ug .degree-awarded{
     margin:0 0 20px;font-family:var(--serif);font-weight:300;font-size:28px;line-height:1.2;
@@ -798,6 +823,7 @@
   .pg-meta dt,
   .mode-meta dt,
   .pg-dl-when .t{font-family:var(--sans);font-weight:400;font-size:var(--body-sm-size);line-height:var(--body-sm-lh)}
+  .hero-img figcaption{font-size:var(--body-sm-size);line-height:var(--body-sm-lh)}
   /* college subtitle sits on body md with the rest of the panel text */
   .crest-row .crest-meta .mt{font-family:var(--sans);font-weight:400;font-size:var(--body-md-size);line-height:var(--body-md-lh)}
   /* college panel labels + values match the fact boxes above */
@@ -870,6 +896,9 @@
     .fact-grid.two{grid-template-columns:1fr}
     .fact{padding:18px 20px}
     .college-card{padding:20px}
+    .hero-img{padding:0 20px 28px}
+    .hero-img figcaption{padding:12px 14px}
+    .hero-img-slot{aspect-ratio:3/2}
     .college-card.college-split{grid-template-columns:1fr;gap:28px}
     .college-card.college-split .cfacts{gap:22px}
     .crest-row{gap:14px}
@@ -1159,38 +1188,24 @@ const VARIANTS = { 1:v2, 2:v2 };
 // ——————— UNDERGRADUATE ———————
 
 const UG = {
-  title: "Mathematics and Philosophy",
-  degree: "BA / MMathPhil",
-  intro: "This course unites mathematics and philosophy, developing rigorous problem-solving and analytical skills. Ideal for graduate study or diverse careers, it offers a rich, intellectually stimulating and historically grounded education.",
-  facts: [
-    { h:"Entry qualifications:", p:"A*A*A with the A*s in Maths and Further Maths if available." },
-    { h:"Course duration:",      p:"4 years" },
-    { h:"UCAS code:",            p:"GV15" },
-    { h:"Application deadline:", p:"15 October 2026" },
-  ],
+  title: "Balliol College",
+  degree: "UCAS campus code: O",
+  intro: "Balliol led the way in turning Oxford into a place open to all on merit. The diverse student body is arguably one of the most active in the University.",
+  image: {
+    caption: "Balliol College, Broad Street",
+  },
   college: {
     name: "Balliol College",
-    meta: "One of the oldest colleges in Oxford, on Broad Street",
+    meta: "Broad Street, Oxford OX1 3BJ",
     facts: [
-      { ic:"tag",       dt:"UCAS campus code",  dd:"B" },
-      { ic:"history",   dt:"Founded",           dd:"1263" },
-      { ic:"groups",    dt:"Student numbers",   dd:"420 undergraduates · 250 graduates" },
-      { ic:"call",      dt:"Contact",           dd:"admissions@balliol.ox.ac.uk<br>+44 (0)1865 277777" },
-      { ic:"open_in_new", dt:"Open days",       dd:'<a href="#">Balliol College open days</a>' },
+      { ic:"tag",         dt:"UCAS campus code", dd:"O" },
+      { ic:"history",     dt:"Founded",          dd:"1263" },
+      { ic:"groups",      dt:"Student numbers",  dd:"399 undergraduates · 302 postgraduates" },
+      { ic:"call",        dt:"Contact",          dd:"Victoria Holt, Undergraduate Admissions Administrator<br>admissions@balliol.ox.ac.uk<br>+44 (0)1865 277765" },
+      { ic:"open_in_new", dt:"Open days",        dd:'<a href="#">Balliol College open days</a>' },
     ],
   },
 };
-
-function ugFacts(){
-  return `
-    <div class="fact-grid">
-      ${UG.facts.map(f=>`
-        <div class="fact">
-          <h3>${esc(f.h)}</h3>
-          <p>${f.p}</p>
-        </div>`).join('')}
-    </div>`;
-}
 
 function ugCollege(){
   const c = UG.college;
@@ -1219,26 +1234,29 @@ function ugCollege(){
 }
 function ugHero(){
   return `
-  <div class="hero ug" data-screen-label="01 UG Hero">
+  <div class="hero ug college" data-screen-label="01 College Hero">
     ${ugNav()}
     <div class="breadcrumb">
-      <a href="#">Menu item<span class="chev" aria-hidden="true"></span></a>
-      <a href="#">Menu item<span class="chev" aria-hidden="true"></span></a>
-      <a href="#">Menu item<span class="chev" aria-hidden="true"></span></a>
+      <a href="#">Admissions<span class="chev" aria-hidden="true"></span></a>
+      <a href="#">Undergraduate<span class="chev" aria-hidden="true"></span></a>
+      <a href="#">Colleges<span class="chev" aria-hidden="true"></span></a>
     </div>
     <div class="body">
       <div class="head">
         <div>
-          <span class="label-pill">Undergraduate</span>
           <h1 class="title">${esc(UG.title)}</h1>
-          <p class="degree-awarded">Degree awarded: <span>${esc(UG.degree)}</span></p>
+          <p class="degree-awarded">${esc(UG.degree)}</p>
           <p class="intro">${esc(UG.intro)}</p>
         </div>
-        ${applyBtn()}
       </div>
-      ${ugFacts()}
       ${ugCollege()}
     </div>
+    <figure class="hero-img">
+      <div class="hero-img-slot">
+        <img src="assets/balliol-hero.png" alt="Balliol College, Broad Street">
+      </div>
+      <figcaption><span class="ci" aria-hidden="true">info</span><span>Balliol College Broad Street facade. Copyright © University of Oxford / Balliol College</span></figcaption>
+    </figure>
   </div>
   `;
 }
