@@ -614,7 +614,7 @@
 
   /* ——— Undergraduate hero (Oxford blue) ——— */
   :root{
-    --ug-blue:      rgb(29,66,166);
+    --ug-blue:      rgb(30,85,215);   /* #1E55D7 — matches course page structured data boxes */
     --ug-box:       rgb(38,80,186);
     --ug-pale:      rgb(185,214,242);
     --ug-chip:      rgb(224,237,249);
@@ -751,6 +751,9 @@
     display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:40px;align-items:start;
   }
   .college-card.college-split .crest-row{margin:0}
+  .college-card.college-split .college-col-left{
+    display:flex;flex-direction:column;gap:28px;min-width:0;
+  }
   .college-card.college-split .cfacts{
     display:flex;flex-direction:column;gap:28px;
   }
@@ -853,7 +856,7 @@
     .hero .intro{font-size:19px;max-width:none}
     .fact-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
     .college-card.college-split{grid-template-columns:1fr 1fr;gap:32px}
-    .college-card.college-split .crest-row{grid-column:1 / -1}
+    .college-card.college-split .college-col-left{grid-column:1 / -1}
     .pg-grid{grid-template-columns:1fr}
     .meta-grid{flex-wrap:wrap}
     .meta{flex:1 1 260px}
@@ -1195,14 +1198,13 @@ const UG = {
     caption: "Balliol College, Broad Street",
   },
   college: {
-    name: "Balliol College",
-    meta: "Broad Street, Oxford OX1 3BJ",
+    address: { ic:"location_on", dt:"Address", dd:"Broad Street, Oxford OX1 3BJ" },
     facts: [
-      { ic:"tag",         dt:"UCAS campus code", dd:"O" },
-      { ic:"history",     dt:"Founded",          dd:"1263" },
-      { ic:"groups",      dt:"Student numbers",  dd:"399 undergraduates · 302 postgraduates" },
-      { ic:"call",        dt:"Contact",          dd:"Victoria Holt, Undergraduate Admissions Administrator<br>admissions@balliol.ox.ac.uk<br>+44 (0)1865 277765" },
-      { ic:"open_in_new", dt:"Open days",        dd:'<a href="#">Balliol College open days</a>' },
+      { ic:"description",    dt:"UCAS campus code", dd:"O" },
+      { ic:"account_balance", dt:"Founded",         dd:"1263" },
+      { ic:"groups",         dt:"Student numbers",  dd:"399 undergraduates · 302 postgraduates" },
+      { ic:"mail",           dt:"Contact",          dd:'Victoria Holt, Undergraduate Admissions Administrator<br><a href="mailto:admissions@balliol.ox.ac.uk">admissions@balliol.ox.ac.uk</a><br>+44 (0)1865 277765' },
+      { ic:"open_in_new",    dt:"College website",  dd:'<a href="https://www.balliol.ox.ac.uk">www.balliol.ox.ac.uk</a>' },
     ],
   },
 };
@@ -1218,14 +1220,13 @@ function ugCollege(){
   const colB = c.facts.slice(3).map(item).join('');
   return `<div class="college-wrap strip">
     <div class="college-card college-split">
-      <div class="crest-row">
-        <div class="crest-slot">
-          <img src="assets/balliol-crest.png" alt="Balliol College crest" class="crest-img">
+      <div class="college-col-left">
+        <div class="crest-row">
+          <div class="crest-slot">
+            <img src="assets/balliol-crest.png" alt="Balliol College crest" class="crest-img">
+          </div>
         </div>
-        <div class="crest-meta">
-          <div class="nm">${esc(c.name)}</div>
-          <div class="mt">${esc(c.meta)}</div>
-        </div>
+        <dl class="cfacts">${item(c.address)}</dl>
       </div>
       <dl class="cfacts">${colA}</dl>
       <dl class="cfacts">${colB}</dl>
